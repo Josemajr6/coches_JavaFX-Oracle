@@ -1,0 +1,34 @@
+package javafx2526.coches_JavaOracle;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class Conexion {
+
+	private static Connection con;
+	
+	private static String driver = "jdbc:oracle:thin:";
+	private static String server = "@localhost:1521";
+	private static String user = "PRUEBA";
+	private static String password = "prueba";
+	
+	private static String clase = "oracle.jdbc.driver.OracleDriver";
+	
+	public static Connection conectar() {
+		if (con == null) {
+			try {
+				Class.forName(clase);
+				
+				con = DriverManager.getConnection(driver+server, user, password);
+				
+				System.out.println("Se ha establecido la conexión con la base de datos...");
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
+			}
+		}
+		
+		return con;
+	}
+	
+	
+}
