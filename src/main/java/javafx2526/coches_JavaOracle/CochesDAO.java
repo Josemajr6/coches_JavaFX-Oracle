@@ -14,7 +14,7 @@ public class CochesDAO {
 		ObservableList<Coche> coches = FXCollections.observableArrayList();
 		Connection con = Conexion.conectar();
 		
-		String sql = "select matricula, marca, modelo, km from PERSONAS";
+		String sql = "select matricula, marca, modelo, km from COCHES";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
