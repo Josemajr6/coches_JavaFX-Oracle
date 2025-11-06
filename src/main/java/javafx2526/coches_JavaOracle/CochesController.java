@@ -50,7 +50,9 @@ public class CochesController implements Initializable {
 
     @FXML
     void oACreateDDL(ActionEvent event) {
-
+		CochesDAO cDAO = new CochesDAO();
+		String res = cDAO.crearDDL();
+		label_Info.setText(res);
     }
 
 }

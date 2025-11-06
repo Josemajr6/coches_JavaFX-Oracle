@@ -34,7 +34,46 @@ public class CochesDAO {
 		
 	}
 	
-	
+	public String crearDDL() {
+		String res = "";
+
+	    String sqlCoches = "CREATE TABLE COCHES ("
+	            + "    matricula VARCHAR2(20),"
+	            + "    marca     VARCHAR2(50),"
+	            + "    modelo    VARCHAR2(50),"
+	            + "    km        NUMBER(10),"
+	            + "    CONSTRAINT pk_coches PRIMARY KEY (matricula)"
+	            + ")";
+
+
+	    String sqlCompras = "CREATE TABLE COMPRAS ("
+	            + "    matricula VARCHAR2(20),"
+	            + "    valor     NUMBER(10, 2) NOT NULL,"
+	            + "    CONSTRAINT pk_compras PRIMARY KEY (matricula),"
+	            + "    CONSTRAINT fk_compras_coches "
+	            + "        FOREIGN KEY (matricula) "
+	            + "        REFERENCES COCHES(matricula)"
+	            + "        ON DELETE CASCADE"
+	            + ")";
+		
+		Connection con = Conexion.conectar();
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sqlCoches);
+			ps.executeUpdate();
+			
+			ps = con.prepareStatement(sqlCompras);
+			ps.executeUpdate();
+			
+			res = "Se han ejecutado correctamente los DDL";
+		} catch (SQLException e) {
+
+			res = "Error: " + e.getMessage();
+		}
+		
+		return res;
+	}
+
 	
 	
 }
