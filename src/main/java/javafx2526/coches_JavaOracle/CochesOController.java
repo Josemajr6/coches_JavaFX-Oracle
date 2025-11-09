@@ -14,22 +14,22 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class CochesController implements Initializable {
+public class CochesOController implements Initializable {
 
     @FXML
-    private TableView<Coche> tvCoches;
+    private TableView<CocheO> tvCoches;
 	
     @FXML
-    private TableColumn<Coche, String> tcMatricula;
+    private TableColumn<CocheO, String> tcMatricula;
     
     @FXML
-    private TableColumn<Coche, String> tcMarca;
+    private TableColumn<CocheO, String> tcMarca;
     
     @FXML
-    private TableColumn<Coche, String> tcModelo;
+    private TableColumn<CocheO, String> tcModelo;
 
     @FXML
-    private TableColumn<Coche, Integer> tcKM;
+    private TableColumn<CocheO, Integer> tcKM;
 
     @FXML
     private TextField tfMatricula;
@@ -49,13 +49,13 @@ public class CochesController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		CochesDAO cDAO = new CochesDAO();
-		ObservableList<Coche> coches = cDAO.seleccionar();
+		CochesODAO cDAO = new CochesODAO();
+		ObservableList<CocheO> coches = cDAO.seleccionar();
 
-		tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
-		tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
-		tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
-		tcKM.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("km"));
+		tcMatricula.setCellValueFactory(new PropertyValueFactory<CocheO, String>("matricula"));
+		tcMarca.setCellValueFactory(new PropertyValueFactory<CocheO, String>("marca"));
+		tcModelo.setCellValueFactory(new PropertyValueFactory<CocheO, String>("modelo"));
+		tcKM.setCellValueFactory(new PropertyValueFactory<CocheO, Integer>("km"));
 		
 		tvCoches.setItems(coches);
 		
@@ -64,7 +64,7 @@ public class CochesController implements Initializable {
 
     @FXML
     void oACreateDDL(ActionEvent event) {
-		CochesDAO cDAO = new CochesDAO();
+		CochesODAO cDAO = new CochesODAO();
 		String res = cDAO.crearDDL();
 		label_Info.setText(res);
     }
@@ -74,8 +74,8 @@ public class CochesController implements Initializable {
     void oAUpdate(ActionEvent event) {
 
     	if (!tfMatricula.getText().isEmpty()) {
-    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
-    		CochesDAO cDAO = new CochesDAO();
+    		CocheO c = new CocheO ("T_COCHE",tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+    		CochesODAO cDAO = new CochesODAO();
     		
     		String res = cDAO.updateCoche(c);
     		label_Info.setText(res);
@@ -88,8 +88,8 @@ public class CochesController implements Initializable {
     void oAAdd(ActionEvent event) {
 
     	if (!tfMatricula.getText().isEmpty()) {
-    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
-    		CochesDAO cDAO = new CochesDAO();
+    		CocheO c = new CocheO ("T_COCHE",tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+    		CochesODAO cDAO = new CochesODAO();
     		
     		String res = cDAO.addCoche(c);
     		label_Info.setText(res);
@@ -101,8 +101,8 @@ public class CochesController implements Initializable {
     @FXML
     void oADel(ActionEvent event) {
     	if (!tfMatricula.getText().isEmpty()) {
-    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
-    		CochesDAO cDAO = new CochesDAO();
+    		CocheO c = new CocheO ("T_COCHE",tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+    		CochesODAO cDAO = new CochesODAO();
     		
     		String res = cDAO.delCoche(c);
     		label_Info.setText(res);
@@ -111,9 +111,9 @@ public class CochesController implements Initializable {
     }
     
     @FXML
-    void oAToObject(ActionEvent event) {
+    void oABack(ActionEvent event) {
     	try {
-			App.setRoot("CochesO");
+			App.setRoot("Coches");
 		} catch (IOException e) {
 			label_Info.setText("Error: " + e.getMessage());
 		}
@@ -122,7 +122,7 @@ public class CochesController implements Initializable {
     @FXML
     void omcPulsarFila() {
 
-    	Coche c = tvCoches.getSelectionModel().getSelectedItem();
+    	CocheO c = tvCoches.getSelectionModel().getSelectedItem();
     	
     	if (c != null) {
     		tfMatricula.setText(c.getMatricula());

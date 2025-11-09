@@ -19,7 +19,7 @@
         </columns>
       </TableView>
       <Button layoutX="34.0" layoutY="14.0" mnemonicParsing="false" onAction="#oACreateDDL" text="Crear DDL" />
-      <Label fx:id="label_Info" layoutX="119.0" layoutY="18.0" prefHeight="17.0" prefWidth="425.0" />
+      <Label fx:id="label_Info" layoutX="119.0" layoutY="18.0" prefHeight="17.0" prefWidth="358.0" />
       <TextField fx:id="tfMatricula" layoutX="29.0" layoutY="382.0" />
       <TextField fx:id="tfMarca" layoutX="200.0" layoutY="382.0" />
       <TextField fx:id="tfModelo" layoutX="29.0" layoutY="439.0" />
@@ -31,5 +31,6 @@
       <Button layoutX="454.0" layoutY="413.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
       <Button layoutX="380.0" layoutY="382.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
       <Button layoutX="380.0" layoutY="439.0" mnemonicParsing="false" onAction="#oADel" text="Borrar" />
+      <Button layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#oAToObject" text="Ir a objeto" />
    </children>
 </Pane>
