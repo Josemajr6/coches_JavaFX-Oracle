@@ -1,9 +1,12 @@
 package javafx2526.coches_JavaOracle;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
+import java.sql.Types;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,7 +133,6 @@ public class CochesDAO {
 			
 			res = "Se ha insertado el coche";
 			
-			con.close(); con = null;
 			ps.close(); ps = null;
 			
 		} catch (Exception e) {
@@ -162,5 +164,150 @@ public class CochesDAO {
 		
 		return res;
 	}
+
+	public String llamarProc(Coche c){
+		
+		String res = "";
+		try {
+		
+		Connection con = Conexion.conectar();
+		con.setAutoCommit(false);
+		String sql = "call ADDCOCHE(?,?, ?, ?)";
+		
+		CallableStatement proc = con.prepareCall(sql);
+		
+		proc.setString(1, c.getMatricula());
+		proc.setString(2, c.getMarca());
+		proc.setString(3, c.getModelo());
+		proc.setInt(4, c.getKm());
+		
+		proc.execute();
+		con.commit();
+		proc.close();
+		con.close();
+		con = null;
+		res = "Se ha ejecutado el procedimiento";
+		} catch (SQLException e) {
+			res = "Error: " + e.getMessage();
+		}
+		return res;
+		
+	}
 	
-}
+	public String llamarFunc(Integer km) {
+		int contador = 0;
+		String res = "";
+		try {
+			
+			Connection con = Conexion.conectar();
+			String sql = "{? = call COCHESMASKM(?)}";
+			
+			CallableStatement cs = con.prepareCall(sql);
+			
+			cs.registerOutParameter(1, Types.NUMERIC);
+			cs.setInt(2, km);
+			cs.execute();
+			
+			String contadorS = cs.getString(1);
+			
+			if (contadorS != null) {
+				contador = Integer.parseInt(contadorS);
+			}
+			
+			cs.close();
+			con.close();
+			con = null;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		res = "Coches con más de " + km + "KM: " + contador;
+		return res;
+	}
+	
+	
+	public String transaccion (Coche c, Integer valor, Integer disponible) {
+		String resultado= "";
+		
+		Connection con = Conexion.conectar();
+		PreparedStatement psCoche = null;
+        PreparedStatement psCompra = null;
+		try {
+
+			con.setAutoCommit(false);
+			addCoche(c);
+			
+			Savepoint gCompra = con.setSavepoint();
+			
+			String sql = "insert into compras values (?, ?)";
+			
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,c.getMatricula());
+			ps.setInt(2, valor);
+			ps.execute();
+			
+			if (valor > disponible) {
+				con.rollback(gCompra);
+				resultado = "Coche guardado, pero la compra no (sin saldo)";
+			}
+			else {
+				resultado = "Coche y compra guardados.";
+			}
+			
+			
+			con.commit();
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		
+			try {
+				con.close(); con = null; 
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} con = null;
+			
+
+		return resultado;
+	}
+	
+}	
+
+// PROCEDIMIENTO Y FUNCIÓN 
+	
+//	
+//	CREATE OR REPLACE PROCEDURE ADDCOCHE 
+//	(
+//	  MATRICULA IN VARCHAR2 
+//	, MARCA IN VARCHAR2 
+//	, MODELO IN VARCHAR2 
+//	, KM IN NUMBER 
+//	) AS 
+//	BEGIN
+//	  insert into coches values (MATRICULA, MARCA, MODELO, KM);
+//	END ADDCOCHE;
+//	
+	
+//	
+//	CREATE OR REPLACE FUNCTION COCHESMASKM 
+//	(
+//	  KM IN NUMBER 
+//	) RETURN VARCHAR2 AS 
+//	  v_count NUMBER; 
+//	BEGIN
+//	  
+//	  SELECT COUNT(*)
+//	  INTO v_count
+//	  FROM COCHES
+//	  WHERE km > KM;
+//	  
+//	  RETURN TO_CHAR(v_count);
+//	  
+//	END COCHESMASKM;
+

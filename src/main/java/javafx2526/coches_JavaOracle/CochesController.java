@@ -44,6 +44,12 @@ public class CochesController implements Initializable {
     private TextField tfKM;
     
     @FXML
+    private TextField tfValor;
+    
+    @FXML
+    private TextField tfDisponible;
+    
+    @FXML
     private Label label_Info;
 
 
@@ -118,6 +124,34 @@ public class CochesController implements Initializable {
 			label_Info.setText("Error: " + e.getMessage());
 		}
     }
+    
+    @FXML
+    void oAProc(ActionEvent event) {
+    	
+    	if (!tcMatricula.getText().isEmpty()) {
+    		
+    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+		 
+			CochesDAO cDAO = new CochesDAO();
+			cDAO.llamarProc(c);
+			this.initialize(null,null);
+		}
+    	
+    }
+    
+    @FXML
+    void oAFunc(ActionEvent event) {
+    	
+    	if (!tcKM.getText().isEmpty()) {
+			CochesDAO cDAO = new CochesDAO();
+			label_Info.setText(cDAO.llamarFunc(Integer.parseInt(tfKM.getText())));
+			this.initialize(null, null);
+		}
+    	else {
+    		label_Info.setText("Error: Introduce KM");
+    	}
+    	
+    }
 
     @FXML
     void omcPulsarFila() {
@@ -132,5 +166,21 @@ public class CochesController implements Initializable {
     	}
     	
     }
+    
+    @FXML
+    void oACompra(ActionEvent event) {
+    	
+    	
+    	if (!tcMatricula.getText().isEmpty() && !tfValor.getText().isEmpty() && !tfDisponible.getText().isEmpty() && !tfKM.getText().isEmpty())
+		{
+		 
+		 CochesDAO cDAO = new CochesDAO();
+    	
+		 label_Info.setText(cDAO.transaccion( new Coche(tfMatricula.getText(),tfMarca.getText(),tfModelo.getText(), 
+				 Integer.parseInt(tfKM.getText())), Integer.valueOf(tfValor.getText()),Integer.valueOf(tfDisponible.getText())));
+		 
+		 this.initialize(null,null);
+		}
+    } 
 
 }

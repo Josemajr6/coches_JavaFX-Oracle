@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx2526.coches_JavaOracle.CochesController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx2526.coches_JavaOracle.CochesController">
    <children>
       <TableView fx:id="tvCoches" layoutX="34.0" layoutY="54.0" onMouseClicked="#omcPulsarFila" prefHeight="286.0" prefWidth="533.0">
         <columns>
@@ -28,9 +28,16 @@
       <Label layoutX="200.0" layoutY="361.0" text="Marca" />
       <Label layoutX="29.0" layoutY="417.0" text="Modelo" />
       <Label layoutX="201.0" layoutY="417.0" text="KM" />
-      <Button layoutX="454.0" layoutY="413.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
-      <Button layoutX="380.0" layoutY="382.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
-      <Button layoutX="380.0" layoutY="439.0" mnemonicParsing="false" onAction="#oADel" text="Borrar" />
+      <Button layoutX="499.0" layoutY="439.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
+      <Button layoutX="372.0" layoutY="439.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
+      <Button layoutX="437.0" layoutY="439.0" mnemonicParsing="false" onAction="#oADel" text="Borrar" />
       <Button layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#oAToObject" text="Ir a objeto" />
+      <Button layoutX="401.0" layoutY="357.0" mnemonicParsing="false" onAction="#oAProc" text="Añadir (Procedimiento)" />
+      <Button layoutX="372.0" layoutY="395.0" mnemonicParsing="false" onAction="#oAFunc" text="Nº Coches con mas KM (Función)" />
+      <TextField fx:id="tfValor" layoutX="29.0" layoutY="493.0" />
+      <Label layoutX="29.0" layoutY="470.0" text="Valor" />
+      <TextField fx:id="tfDisponible" layoutX="200.0" layoutY="493.0" />
+      <Label layoutX="201.0" layoutY="471.0" text="Disponible" />
+      <Button layoutX="368.0" layoutY="493.0" mnemonicParsing="false" onAction="#oACompra" prefHeight="25.0" prefWidth="209.0" text="Compra" />
    </children>
 </Pane>
