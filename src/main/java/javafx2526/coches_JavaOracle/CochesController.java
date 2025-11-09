@@ -76,7 +76,22 @@ public class CochesController implements Initializable {
     		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
     		CochesDAO cDAO = new CochesDAO();
     		
-    		cDAO.updateCoche(c);
+    		String res = cDAO.updateCoche(c);
+    		label_Info.setText(res);
+    		this.initialize(null, null);
+    	}
+    	
+    }
+    
+    @FXML
+    void oAAdd(ActionEvent event) {
+
+    	if (!tfMatricula.getText().isEmpty()) {
+    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+    		CochesDAO cDAO = new CochesDAO();
+    		
+    		String res = cDAO.addCoche(c);
+    		label_Info.setText(res);
     		this.initialize(null, null);
     	}
     	

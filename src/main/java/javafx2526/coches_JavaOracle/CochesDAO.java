@@ -114,4 +114,30 @@ public class CochesDAO {
 		return res;
 	}
 	
+	public String addCoche(Coche c) {
+		String res = "";	
+		Connection con = Conexion.conectar();
+		
+		try {
+			String sql = "insert into coches values (?, ?, ?, ?)";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, c.getMatricula());
+			ps.setString(2, c.getMarca());
+			ps.setString(3, c.getModelo());
+			ps.setInt(4, c.getKm());
+
+			ps.executeUpdate();
+			
+			res = "Se ha insertado el coche";
+			
+			con.close(); con = null;
+			ps.close(); ps = null;
+			
+		} catch (Exception e) {
+			res = "Error: " + e.getMessage();
+		}
+		
+		return res;
+	}
+	
 }

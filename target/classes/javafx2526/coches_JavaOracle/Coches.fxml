@@ -28,6 +28,7 @@
       <Label layoutX="200.0" layoutY="361.0" text="Marca" />
       <Label layoutX="29.0" layoutY="417.0" text="Modelo" />
       <Label layoutX="201.0" layoutY="417.0" text="KM" />
-      <Button layoutX="379.0" layoutY="405.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
+      <Button layoutX="380.0" layoutY="439.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
+      <Button layoutX="380.0" layoutY="382.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
    </children>
 </Pane>
