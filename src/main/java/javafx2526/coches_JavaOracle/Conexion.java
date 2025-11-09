@@ -2,6 +2,7 @@ package javafx2526.coches_JavaOracle;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Conexion {
 
@@ -15,20 +16,24 @@ public class Conexion {
 	private static String clase = "oracle.jdbc.driver.OracleDriver";
 	
 	public static Connection conectar() {
-		if (con == null) {
-			try {
-				Class.forName(clase);
-				
-				con = DriverManager.getConnection(driver+server, user, password);
-				
-				System.out.println("Se ha establecido la conexión con la base de datos...");
-			} catch (Exception e) {
-				System.out.println("Error: " + e.getMessage());
+		try {
+			if (con == null || con.isClosed()) {
+					try {
+						Class.forName(clase);
+						con = DriverManager.getConnection(driver+server, user, password);
+						
+						System.out.println("Se ha establecido la conexión con la base de datos...");
+						
+					} catch (ClassNotFoundException e) {
+
+						e.printStackTrace();
+					}
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return con;
 	}
-	
-	
 }

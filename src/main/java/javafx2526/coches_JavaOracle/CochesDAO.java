@@ -24,8 +24,10 @@ public class CochesDAO {
 				coches.add(new Coche(rs.getString(1), rs.getString(2), rs.getString(3), Integer.parseInt(rs.getString(4))));
 			}
 			
-			con.close();
-			con = null;
+			ps.close(); ps = null;
+			rs.close(); rs = null;
+			con.close(); con = null;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -33,6 +35,8 @@ public class CochesDAO {
 		return coches;
 		
 	}
+	
+	
 	
 	public String crearDDL() {
 		String res = "";
@@ -66,14 +70,48 @@ public class CochesDAO {
 			ps.executeUpdate();
 			
 			res = "Se han ejecutado correctamente los DDL";
+			
+			ps.close();
+			ps = null;
+			con.close();
+			con = null;
 		} catch (SQLException e) {
 
-			res = "Error: " + e.getMessage();
+			if (e.getErrorCode() == 955) {
+				res = "Error: Las tablas ya existen";
+			}
+			else {
+				res = "Error: " + e.getMessage();
+			}
 		}
 		
 		return res;
 	}
 
-	
+	public String updateCoche(Coche c) {
+		String res = "";	
+		Connection con = Conexion.conectar();
+		
+		try {
+			String sql = "update coches set marca = ?, modelo = ?, km = ? where matricula = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, c.getMarca());
+			ps.setString(2, c.getModelo());
+			ps.setInt(3, c.getKm());
+			ps.setString(4, c.getMatricula());
+			
+			ps.executeUpdate();
+			
+			res = "Se ha actualizado el coche";
+			
+			con.close(); con = null;
+			ps.close(); ps = null;
+			
+		} catch (Exception e) {
+			res = "Error: " + e.getMessage();
+		}
+		
+		return res;
+	}
 	
 }

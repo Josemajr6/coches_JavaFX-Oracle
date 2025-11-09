@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CochesController implements Initializable {
@@ -29,6 +30,18 @@ public class CochesController implements Initializable {
     @FXML
     private TableColumn<Coche, Integer> tcKM;
 
+    @FXML
+    private TextField tfMatricula;
+    
+    @FXML
+    private TextField tfMarca;
+    
+    @FXML
+    private TextField tfModelo;
+    
+    @FXML
+    private TextField tfKM;
+    
     @FXML
     private Label label_Info;
 
@@ -53,6 +66,35 @@ public class CochesController implements Initializable {
 		CochesDAO cDAO = new CochesDAO();
 		String res = cDAO.crearDDL();
 		label_Info.setText(res);
+    }
+    
+
+    @FXML
+    void oAUpdate(ActionEvent event) {
+
+    	if (!tfMatricula.getText().isEmpty()) {
+    		Coche c = new Coche (tfMatricula.getText(), tfMarca.getText(), tfModelo.getText(), Integer.parseInt(tfKM.getText()));
+    		CochesDAO cDAO = new CochesDAO();
+    		
+    		cDAO.updateCoche(c);
+    		this.initialize(null, null);
+    	}
+    	
+    }
+    
+
+    @FXML
+    void omcPulsarFila() {
+
+    	Coche c = tvCoches.getSelectionModel().getSelectedItem();
+    	
+    	if (c != null) {
+    		tfMatricula.setText(c.getMatricula());
+    		tfMarca.setText(c.getMarca());
+    		tfModelo.setText(c.getModelo());
+    		tfKM.setText(String.valueOf(c.getKm()));
+    	}
+    	
     }
 
 }
