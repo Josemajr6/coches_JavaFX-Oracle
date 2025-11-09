@@ -140,4 +140,27 @@ public class CochesDAO {
 		return res;
 	}
 	
+	public String delCoche(Coche c) {
+		String res = "";	
+		Connection con = Conexion.conectar();
+		
+		try {
+			String sql = "delete from coches where matricula = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, c.getMatricula());
+
+			ps.executeUpdate();
+			
+			res = "Se ha borrado el coche";
+			
+			con.close(); con = null;
+			ps.close(); ps = null;
+			
+		} catch (Exception e) {
+			res = "Error: " + e.getMessage();
+		}
+		
+		return res;
+	}
+	
 }
