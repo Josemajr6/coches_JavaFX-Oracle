@@ -29,6 +29,7 @@ public class CochesODAO {
 			con.close(); con = null;
 			
 		} catch (SQLException e) {
+			if (e.getErrorCode() != 942)
 			e.printStackTrace();
 		}
 

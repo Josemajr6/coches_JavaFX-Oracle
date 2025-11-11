@@ -32,6 +32,7 @@ public class CochesDAO {
 			con.close(); con = null;
 			
 		} catch (SQLException e) {
+			if (!(e.getErrorCode()==942))
 			e.printStackTrace();
 		}
 
@@ -54,27 +55,39 @@ public class CochesDAO {
 
 
 	    String sqlCompras = "CREATE TABLE COMPRAS ("
+	            + "    id        NUMBER(10) PRIMARY KEY,"
 	            + "    matricula VARCHAR2(20),"
 	            + "    valor     NUMBER(10, 2) NOT NULL,"
-	            + "    CONSTRAINT pk_compras PRIMARY KEY (matricula),"
 	            + "    CONSTRAINT fk_compras_coches "
 	            + "        FOREIGN KEY (matricula) "
-	            + "        REFERENCES COCHES(matricula)"
+	            + "        REFERENCES COCHES(matricula) "
 	            + "        ON DELETE CASCADE"
 	            + ")";
+
 		
+	    String sqlSecuencia = "CREATE SEQUENCE SEC_COM START WITH 1 INCREMENT BY 1";
+
+
+	    
 		Connection con = Conexion.conectar();
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sqlCoches);
 			ps.executeUpdate();
 			ps.close();
+			
+			
 			ps = con.prepareStatement(sqlCompras);
 			ps.executeUpdate();
+			ps.close();
+			
+			ps = con.prepareStatement(sqlSecuencia);
+			ps.executeUpdate();
+			ps.close();
 			
 			res = "Se han ejecutado correctamente los DDL";
 			
-			ps.close();
+
 			ps = null;
 			con.close();
 			con = null;
@@ -239,7 +252,7 @@ public class CochesDAO {
 			
 			Savepoint gCompra = con.setSavepoint();
 			
-			String sql = "insert into compras values (?, ?)";
+			String sql = "insert into compras values (SEC_COM.NEXTVAL, ?, ?)";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1,c.getMatricula());
@@ -249,6 +262,62 @@ public class CochesDAO {
 			if (valor > disponible) {
 				con.rollback(gCompra);
 				resultado = "Coche guardado, pero la compra no (sin saldo)";
+			}
+			else {
+				resultado = "Coche y compra guardados.";
+			}
+			
+			
+			con.commit();
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		
+			try {
+				con.close(); con = null; 
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} con = null;
+			
+
+		return resultado;
+	}
+	
+	public String transaccionEdad (Coche c, Integer edad, Integer valor, Integer disponible) {
+		String resultado= "";
+		
+		Connection con = Conexion.conectar();
+		PreparedStatement psCoche = null;
+        PreparedStatement psCompra = null;
+		try {
+
+			con.setAutoCommit(false);
+			addCoche(c);
+			
+			Savepoint gCompra = con.setSavepoint();
+			
+			String sql = "insert into compras values (SEC_COM.NEXTVAL, ?, ?)";
+			
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,c.getMatricula());
+			ps.setInt(2, valor);
+			ps.execute();
+			
+			if (valor > disponible) {
+				con.rollback(gCompra);
+				resultado = "Coche guardado, pero la compra no (no tienes saldo)";
+			}
+			else if (edad < 18) {
+				con.rollback(gCompra);
+				resultado = "Coche guardado, pero la compra no (no tienes edad)";
+
 			}
 			else {
 				resultado = "Coche y compra guardados.";

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,7 +51,14 @@ public class CochesController implements Initializable {
     private TextField tfDisponible;
     
     @FXML
+    private TextField tfEdad;
+    
+    @FXML
     private Label label_Info;
+    
+
+    @FXML
+    private CheckBox cbConfirm;
 
 
 	@Override
@@ -182,5 +190,20 @@ public class CochesController implements Initializable {
 		 this.initialize(null,null);
 		}
     } 
+    
+
+    @FXML
+    void oACompraEdad(ActionEvent event) {
+    	if (!tcMatricula.getText().isEmpty() && !tfValor.getText().isEmpty() && !tfDisponible.getText().isEmpty() && !tfKM.getText().isEmpty() && cbConfirm.isSelected())
+		{
+		 
+		 CochesDAO cDAO = new CochesDAO();
+    	
+		 label_Info.setText(cDAO.transaccionEdad( new Coche(tfMatricula.getText(),tfMarca.getText(),tfModelo.getText(), 
+				 Integer.parseInt(tfKM.getText())),Integer.valueOf(tfEdad.getText()), Integer.valueOf(tfValor.getText()),Integer.valueOf(tfDisponible.getText())));
+		 
+		 this.initialize(null,null);
+		}
+    }
 
 }

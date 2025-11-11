@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -8,9 +10,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx2526.coches_JavaOracle.CochesController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx2526.coches_JavaOracle.CochesController">
    <children>
-      <TableView fx:id="tvCoches" layoutX="34.0" layoutY="54.0" onMouseClicked="#omcPulsarFila" prefHeight="286.0" prefWidth="533.0">
+      <TableView fx:id="tvCoches" layoutX="37.0" layoutY="133.0" onMouseClicked="#omcPulsarFila" prefHeight="286.0" prefWidth="533.0">
         <columns>
           <TableColumn fx:id="tcMatricula" prefWidth="131.0" text="Matricula" />
           <TableColumn fx:id="tcMarca" prefWidth="137.0" text="Marca" />
@@ -18,26 +20,40 @@
             <TableColumn fx:id="tcKM" prefWidth="109.0" text="KM" />
         </columns>
       </TableView>
-      <Button layoutX="34.0" layoutY="14.0" mnemonicParsing="false" onAction="#oACreateDDL" text="Crear DDL" />
-      <Label fx:id="label_Info" layoutX="119.0" layoutY="18.0" prefHeight="17.0" prefWidth="358.0" />
-      <TextField fx:id="tfMatricula" layoutX="29.0" layoutY="382.0" />
-      <TextField fx:id="tfMarca" layoutX="200.0" layoutY="382.0" />
-      <TextField fx:id="tfModelo" layoutX="29.0" layoutY="439.0" />
-      <TextField fx:id="tfKM" layoutX="200.0" layoutY="439.0" />
-      <Label layoutX="30.0" layoutY="361.0" text="Matricula" />
-      <Label layoutX="200.0" layoutY="361.0" text="Marca" />
-      <Label layoutX="29.0" layoutY="417.0" text="Modelo" />
-      <Label layoutX="201.0" layoutY="417.0" text="KM" />
-      <Button layoutX="499.0" layoutY="439.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
-      <Button layoutX="372.0" layoutY="439.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
-      <Button layoutX="437.0" layoutY="439.0" mnemonicParsing="false" onAction="#oADel" text="Borrar" />
-      <Button layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#oAToObject" text="Ir a objeto" />
-      <Button layoutX="401.0" layoutY="357.0" mnemonicParsing="false" onAction="#oAProc" text="Añadir (Procedimiento)" />
-      <Button layoutX="372.0" layoutY="395.0" mnemonicParsing="false" onAction="#oAFunc" text="Nº Coches con mas KM (Función)" />
-      <TextField fx:id="tfValor" layoutX="29.0" layoutY="493.0" />
-      <Label layoutX="29.0" layoutY="470.0" text="Valor" />
-      <TextField fx:id="tfDisponible" layoutX="200.0" layoutY="493.0" />
-      <Label layoutX="201.0" layoutY="471.0" text="Disponible" />
-      <Button layoutX="368.0" layoutY="493.0" mnemonicParsing="false" onAction="#oACompra" prefHeight="25.0" prefWidth="209.0" text="Compra" />
+      <Button layoutX="37.0" layoutY="93.0" mnemonicParsing="false" onAction="#oACreateDDL" text="Crear DDL" />
+      <Label fx:id="label_Info" layoutX="125.0" layoutY="97.0" prefHeight="17.0" prefWidth="358.0" />
+      <TextField fx:id="tfMatricula" layoutX="32.0" layoutY="461.0" />
+      <TextField fx:id="tfMarca" layoutX="203.0" layoutY="461.0" />
+      <TextField fx:id="tfModelo" layoutX="32.0" layoutY="518.0" />
+      <TextField fx:id="tfKM" layoutX="203.0" layoutY="518.0" />
+      <Label layoutX="33.0" layoutY="440.0" text="Matricula" />
+      <Label layoutX="203.0" layoutY="440.0" text="Marca" />
+      <Label layoutX="32.0" layoutY="496.0" text="Modelo" />
+      <Label layoutX="204.0" layoutY="496.0" text="KM" />
+      <Button layoutX="502.0" layoutY="518.0" mnemonicParsing="false" onAction="#oAUpdate" text="Modificar" />
+      <Button layoutX="375.0" layoutY="518.0" mnemonicParsing="false" onAction="#oAAdd" text="Añadir" />
+      <Button layoutX="440.0" layoutY="518.0" mnemonicParsing="false" onAction="#oADel" text="Borrar" />
+      <Button layoutX="500.0" layoutY="93.0" mnemonicParsing="false" onAction="#oAToObject" text="Ir a objeto" />
+      <Button layoutX="404.0" layoutY="436.0" mnemonicParsing="false" onAction="#oAProc" text="Añadir (Procedimiento)" />
+      <Button layoutX="375.0" layoutY="474.0" mnemonicParsing="false" onAction="#oAFunc" text="Nº Coches con mas KM (Función)" />
+      <TextField fx:id="tfValor" layoutX="32.0" layoutY="572.0" />
+      <Label layoutX="32.0" layoutY="549.0" text="Valor" />
+      <TextField fx:id="tfDisponible" layoutX="203.0" layoutY="572.0" />
+      <Label layoutX="204.0" layoutY="550.0" text="Disponible" />
+      <Button layoutX="371.0" layoutY="572.0" mnemonicParsing="false" onAction="#oACompra" prefHeight="25.0" prefWidth="209.0" text="Compra" />
+      <Button layoutX="420.0" layoutY="645.0" mnemonicParsing="false" onAction="#oACompraEdad" prefHeight="25.0" prefWidth="138.0" text="Compra ? Edad" />
+      <Label layoutX="144.0" layoutY="649.0" prefHeight="17.0" prefWidth="289.0" text="Metodo para comprar teniendo en cuenta la edad">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfEdad" layoutX="30.0" layoutY="646.0" prefHeight="25.0" prefWidth="86.0" />
+      <Label layoutX="32.0" layoutY="627.0" text="Edad" />
+      <CheckBox fx:id="cbConfirm" layoutX="447.0" layoutY="619.0" mnemonicParsing="false" text="Confirmar" />
+      <Label layoutX="94.0" layoutY="28.0" prefHeight="43.0" prefWidth="481.0" text="VISTA DE TABLA SIN OBJETOS" underline="true">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
